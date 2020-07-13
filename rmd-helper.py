@@ -90,7 +90,8 @@ def launch_and_notify(cmd):
 @click.command()
 @click.option("--rect", is_flag=True, help="Select a rectangle for capture (default)")
 @click.option("--screen", is_flag=True, help="Capture active screen")
-def main(screen, rect):
+@click.option("--sound", is_flag=True, help="Capture sound")
+def main(rect, screen, sound):
     """Minimalistic wrapper for recordmydesktop that makes recording of the
     currently active screen or a region easier.
     Designed for single or dual monitor setup, with a resolution of 1920x1080.
@@ -126,6 +127,8 @@ def main(screen, rect):
         cmd.append(str(abs(c2.x - c1.x)))
         cmd.append("-height")
         cmd.append(str(abs(c2.y - c1.y)))
+    if not sound:
+        cmd.append("--no-sound")
     cmd.append("-o")
     cmd.append(
         os.path.join(
